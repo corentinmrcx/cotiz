@@ -31,11 +31,7 @@
                 @error('form.nb_enfants_seuls') <span class="champ-erreur">{{ $message }}</span> @enderror
             </label>
         </div>
-        <div class="grille-3">
-            <label>Montant encaissé (€)
-                <input type="number" step="0.01" min="0" wire:model="form.montant_encaisse">
-                @error('form.montant_encaisse') <span class="champ-erreur">{{ $message }}</span> @enderror
-            </label>
+        <div class="grille-2">
             <label>Mode de règlement
                 <select wire:model="form.mode_reglement">
                     <option value="">—</option>

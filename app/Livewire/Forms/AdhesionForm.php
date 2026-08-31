@@ -21,7 +21,7 @@ class AdhesionForm extends Form
 
     public int $nb_enfants_seuls = 0;
 
-    public string $montant_encaisse = '';
+    public ?float $montant_encaisse = null;
 
     public string $mode_reglement = '';
 
@@ -36,7 +36,6 @@ class AdhesionForm extends Form
             'nb_adultes' => ['required', 'integer', 'min:0'],
             'nb_enfants_famille' => ['required', 'integer', 'min:0'],
             'nb_enfants_seuls' => ['required', 'integer', 'min:0'],
-            'montant_encaisse' => ['nullable', 'numeric', 'min:0'],
             'mode_reglement' => ['nullable', 'in:Chèque,Espèces,Virement,CB'],
             'date_reglement' => ['nullable', 'date'],
         ];
@@ -51,7 +50,6 @@ class AdhesionForm extends Form
             'nb_adultes' => 'nombre d\'adultes',
             'nb_enfants_famille' => 'nombre d\'enfants en famille',
             'nb_enfants_seuls' => 'nombre d\'enfants seuls',
-            'montant_encaisse' => 'montant encaissé',
             'mode_reglement' => 'mode de règlement',
             'date_reglement' => 'date de règlement',
         ];
@@ -65,7 +63,7 @@ class AdhesionForm extends Form
         $this->nb_adultes = $adhesion->nb_adultes;
         $this->nb_enfants_famille = $adhesion->nb_enfants_famille;
         $this->nb_enfants_seuls = $adhesion->nb_enfants_seuls;
-        $this->montant_encaisse = $adhesion->montant_encaisse === null ? '' : (string) $adhesion->montant_encaisse;
+        $this->montant_encaisse = $adhesion->montant_encaisse === null ? null : (float) $adhesion->montant_encaisse;
         $this->mode_reglement = $adhesion->mode_reglement ?? '';
         $this->date_reglement = $adhesion->date_reglement?->format('Y-m-d') ?? '';
     }
@@ -82,7 +80,7 @@ class AdhesionForm extends Form
             nbAdultes: $this->nb_adultes,
             nbEnfantsFamille: $this->nb_enfants_famille,
             nbEnfantsSeuls: $this->nb_enfants_seuls,
-            montantEncaisse: $this->montant_encaisse === '' ? null : (float) $this->montant_encaisse,
+            montantEncaisse: $this->montant_encaisse,
             modeReglement: $this->mode_reglement === '' ? null : $this->mode_reglement,
             dateReglement: $this->date_reglement === '' ? null : CarbonImmutable::parse($this->date_reglement),
         );

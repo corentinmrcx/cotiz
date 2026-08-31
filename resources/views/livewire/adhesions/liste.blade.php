@@ -41,11 +41,11 @@
                     @forelse ($adhesions as $adhesion)
                         <tr>
                             <td>{{ $adhesion->numero }}</td>
-                            <td>{{ $adhesion->nomComplet() }}</td>
-                            <td>{{ $adhesion->nb_adultes }} ad. / {{ $adhesion->nbEnfants() }} enf.</td>
+                            <td class="nowrap">{{ $adhesion->nomComplet() }}</td>
+                            <td class="nowrap">{{ $adhesion->nb_adultes }} ad. / {{ $adhesion->nbEnfants() }} enf.</td>
                             <td>{{ \App\Services\FormateurMontant::euros($adhesion->cotisation_calculee) }} €</td>
                             <td>{{ implode(', ', $adhesion->emailsDestinataires()) }}</td>
-                            <td>
+                            <td class="nowrap">
                                 <x-statut :statut="$adhesion->statut" />
                                 @if ($adhesion->date_envoi)
                                     <small class="aide-ligne">{{ $adhesion->date_envoi->format('d/m/Y H:i') }}</small>
@@ -63,9 +63,14 @@
                                 @endif
                             </td>
                             <td class="actions-ligne">
-                                <button type="button" class="bouton petit secondaire" wire:click="renvoyer({{ $adhesion->id }})" wire:confirm="Envoyer la carte {{ $adhesion->numero }} par mail ?" @disabled($traitement)>{{ $adhesion->statut === \App\Enums\StatutAdhesion::AEnvoyer ? 'Envoyer' : 'Renvoyer' }}</button>
-                                <a class="bouton petit secondaire" href="{{ route('adhesions.modifier', $adhesion) }}">Modifier</a>
-                                <button type="button" class="bouton petit danger" wire:click="supprimer({{ $adhesion->id }})" wire:confirm="Supprimer l'adhésion {{ $adhesion->numero }} ?">Supprimer</button>
+                                <details class="menu-actions">
+                                    <summary title="Actions">⋯</summary>
+                                    <div class="menu-actions-liste">
+                                        <button type="button" wire:click="renvoyer({{ $adhesion->id }})" wire:confirm="Envoyer la carte {{ $adhesion->numero }} par mail ?" @disabled($traitement)>{{ $adhesion->statut === \App\Enums\StatutAdhesion::AEnvoyer ? 'Envoyer' : 'Renvoyer' }}</button>
+                                        <a href="{{ route('adhesions.modifier', $adhesion) }}">Modifier</a>
+                                        <button type="button" class="danger" wire:click="supprimer({{ $adhesion->id }})" wire:confirm="Supprimer l'adhésion {{ $adhesion->numero }} ?">Supprimer</button>
+                                    </div>
+                                </details>
                             </td>
                         </tr>
                     @empty
