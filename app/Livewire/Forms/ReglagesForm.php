@@ -103,6 +103,10 @@ class ReglagesForm extends Form
             return $this->copie_cachee_active ? '1' : '0';
         }
 
+        if ($cle === CleReglage::SmtpPassword) {
+            return str_replace(' ', '', $this->smtp_password);
+        }
+
         return (string) $this->{$cle->value};
     }
 }

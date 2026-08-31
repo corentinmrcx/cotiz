@@ -35,7 +35,7 @@ class ReglagesTest extends TestCase
     {
         Livewire::test(Parametres::class)
             ->set('form.expediteur_nom', 'Bureau')
-            ->set('form.smtp_password', 'secret-smtp')
+            ->set('form.smtp_password', 'secr et-s mtp')
             ->call('enregistrer')
             ->assertHasNoErrors()
             ->assertSet('message', 'Réglages enregistrés.');
