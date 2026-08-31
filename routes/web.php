@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApercuCarteController;
 use App\Http\Controllers\ClasseurModeleController;
 use App\Http\Controllers\FichierCarteController;
+use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\VisuelController;
 use App\Models\Adhesion;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,10 @@ Route::get('/import/classeur-modele', [ClasseurModeleController::class, 'telecha
 Route::view('/adhesions', 'adhesions.index')->name('adhesions');
 Route::get('/adhesions/nouvelle', fn () => view('adhesions.formulaire', ['adhesion' => null]))->name('adhesions.nouvelle');
 Route::get('/adhesions/{adhesion}/modifier', fn (Adhesion $adhesion) => view('adhesions.formulaire', ['adhesion' => $adhesion]))->name('adhesions.modifier');
+
+Route::get('/historique', [HistoriqueController::class, 'index'])->name('historique');
+Route::get('/historique/{saison}', [HistoriqueController::class, 'saison'])->name('historique.saison');
+Route::get('/historique/{saison}/export', [HistoriqueController::class, 'exporter'])->name('historique.export');
 
 Route::view('/reglages', 'reglages')->name('reglages');
 
