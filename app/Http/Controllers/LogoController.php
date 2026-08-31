@@ -6,9 +6,9 @@ use App\Models\Saison;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class VisuelController extends Controller
+class LogoController extends Controller
 {
-    public function logo(Saison $saison): StreamedResponse
+    public function afficher(Saison $saison): StreamedResponse
     {
         $chemin = $saison->logo;
 

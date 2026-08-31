@@ -5,8 +5,8 @@ use App\Http\Controllers\ClasseurModeleController;
 use App\Http\Controllers\FichierCarteController;
 use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoController;
 use App\Http\Controllers\SauvegardeController;
-use App\Http\Controllers\VisuelController;
 use App\Http\Middleware\RequireAuthWhenEnabled;
 use App\Models\Adhesion;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +32,7 @@ Route::middleware(RequireAuthWhenEnabled::class)->group(function () {
     Route::view('/reglages', 'reglages')->name('reglages');
     Route::get('/sauvegarde', [SauvegardeController::class, 'telecharger'])->name('sauvegarde.telecharger');
 
-    Route::get('/saisons/{saison}/logo', [VisuelController::class, 'logo'])->name('saisons.logo');
+    Route::get('/saisons/{saison}/logo', [LogoController::class, 'afficher'])->name('saisons.logo');
     Route::get('/cartes/apercu', [ApercuCarteController::class, 'afficher'])->name('cartes.apercu');
     Route::get('/cartes/{adhesion}/{format}', [FichierCarteController::class, 'afficher'])
         ->whereIn('format', ['pdf', 'png'])
