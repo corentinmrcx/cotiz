@@ -1,4 +1,19 @@
 <div>
+    <div class="entete-page">
+        <h1>Adhésions</h1>
+        @if ($saison)
+            <details class="menu-actions">
+                <summary title="Actions">⋯</summary>
+                <div class="menu-actions-liste">
+                    <a href="{{ route('import') }}">Importer un classeur</a>
+                    <a href="{{ route('adhesions.nouvelle') }}">Ajouter une adhésion</a>
+                    <button type="button" wire:click="demarrerGenerationTest" @disabled($traitement)>Générer les cartes en test</button>
+                    <button type="button" wire:click="demarrerEnvoi" wire:confirm="Envoyer les cartes par mail à toutes les adhésions non envoyées ?" @disabled($traitement)>Envoyer les cartes</button>
+                </div>
+            </details>
+        @endif
+    </div>
+
     @if ($message)
         <p class="message succes">{{ $message }}</p>
     @endif
@@ -26,12 +41,6 @@
                         @endforeach
                     </select>
                 </label>
-                <div class="actions">
-                    <a class="bouton secondaire" href="{{ route('import') }}">Importer un classeur</a>
-                    <a class="bouton secondaire" href="{{ route('adhesions.nouvelle') }}">Ajouter</a>
-                    <button type="button" class="bouton secondaire" wire:click="demarrerGenerationTest" @disabled($traitement)>Générer les cartes en test</button>
-                    <button type="button" class="bouton" wire:click="demarrerEnvoi" wire:confirm="Envoyer les cartes par mail à toutes les adhésions non envoyées ?" @disabled($traitement)>Envoyer les cartes</button>
-                </div>
             </div>
 
             <table class="tableau">

@@ -61,7 +61,7 @@ body {
 
 .pied {
     flex-shrink: 0;
-    padding: 0.4rem 1rem;
+    padding: 0.85rem 1rem;
     text-align: center;
     font-size: 0.75rem;
     color: #55605a;
@@ -267,3 +267,6 @@ legend { font-weight: 700; padding: 0 0.4rem; }
     border-bottom: 1px solid #ecd9ac;
 }
 .bandeau-alerte a { color: inherit; font-weight: 600; }
+
+.entete-page { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.entete-page h1 { margin: 0; }

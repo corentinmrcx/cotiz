@@ -8,17 +8,14 @@
     <div class="grille-2">
         <div>
             <h3>Saisons existantes</h3>
-            <div class="defilement-x">
             <table class="tableau">
                 <thead>
-                    <tr><th>Libellé</th><th>Tarifs</th><th>Adhésions</th><th></th></tr>
+                    <tr><th>Libellé</th><th></th></tr>
                 </thead>
                 <tbody>
                     @foreach ($saisons as $saison)
                         <tr>
                             <td>{{ $saison->libelle }} @if ($saison->active) <span class="badge vert">Active</span> @endif</td>
-                            <td class="nowrap">{{ $saison->tarif_adulte }} € / {{ $saison->tarif_enfant_famille }} € / {{ $saison->tarif_enfant_seul }} €</td>
-                            <td>{{ $saison->adhesions_count }}</td>
                             <td class="actions-ligne">
                                 @unless ($saison->active)
                                     <button type="button" class="bouton petit secondaire" wire:click="activer({{ $saison->id }})">Activer</button>
@@ -31,7 +28,6 @@
                     @endforeach
                 </tbody>
             </table>
-            </div>
 
             @if (! $ajoutOuvert)
                 <button type="button" class="bouton secondaire" wire:click="$set('ajoutOuvert', true)">Ouvrir une nouvelle saison</button>
