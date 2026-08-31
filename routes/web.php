@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApercuCarteController;
 use App\Http\Controllers\ClasseurModeleController;
+use App\Http\Controllers\FichierCarteController;
 use App\Http\Controllers\VisuelController;
 use App\Models\Adhesion;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,6 @@ Route::get('/visuels/{saison}/{face}', [VisuelController::class, 'afficher'])
     ->whereIn('face', ['recto', 'verso'])
     ->name('visuels.afficher');
 Route::get('/cartes/apercu', [ApercuCarteController::class, 'afficher'])->name('cartes.apercu');
+Route::get('/cartes/{adhesion}/{format}', [FichierCarteController::class, 'afficher'])
+    ->whereIn('format', ['pdf', 'png'])
+    ->name('cartes.fichier');

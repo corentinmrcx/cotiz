@@ -162,3 +162,8 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .actions-ligne { white-space: nowrap; }
 .actions-ligne .bouton { margin-right: 0.3rem; }
 .tableau td:first-child { white-space: nowrap; }
+
+.progression { height: 12px; background: var(--gris); border-radius: 999px; overflow: hidden; margin: 0.75rem 0; }
+.progression-barre { height: 100%; background: var(--vert); transition: width 0.3s; }
+.aide-ligne { display: block; font-size: 0.75rem; color: #55605a; margin-top: 0.2rem; }
+.erreur-ligne { color: var(--rouge); }
