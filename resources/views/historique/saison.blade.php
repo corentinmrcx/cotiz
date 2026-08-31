@@ -22,7 +22,7 @@
                         <td>{{ \App\Services\FormateurMontant::euros($adhesion->cotisation_calculee) }} €</td>
                         <td>{{ $adhesion->montant_encaisse === null ? '—' : \App\Services\FormateurMontant::euros($adhesion->montant_encaisse).' €' }}</td>
                         <td>{{ implode(', ', $adhesion->emailsDestinataires()) }}</td>
-                        <td><x-statut :statut="$adhesion->statut" /> @if ($adhesion->date_envoi) <small class="aide-ligne">{{ $adhesion->date_envoi->format('d/m/Y H:i') }}</small> @endif</td>
+                        <td><x-statut :statut="$adhesion->statut" :titre="$adhesion->erreur_envoi" /> @if ($adhesion->date_envoi) <small class="aide-ligne">{{ $adhesion->date_envoi->format('d/m/Y H:i') }}</small> @endif</td>
                         <td>
                             @if ($adhesion->chemin_pdf)
                                 <a href="{{ route('cartes.fichier', [$adhesion, 'pdf']) }}" target="_blank">PDF</a>

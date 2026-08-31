@@ -46,12 +46,9 @@
                             <td>{{ \App\Services\FormateurMontant::euros($adhesion->cotisation_calculee) }} €</td>
                             <td>{{ implode(', ', $adhesion->emailsDestinataires()) }}</td>
                             <td class="nowrap">
-                                <x-statut :statut="$adhesion->statut" />
+                                <x-statut :statut="$adhesion->statut" :titre="$adhesion->erreur_envoi" />
                                 @if ($adhesion->date_envoi)
                                     <small class="aide-ligne">{{ $adhesion->date_envoi->format('d/m/Y H:i') }}</small>
-                                @endif
-                                @if ($adhesion->erreur_envoi)
-                                    <small class="aide-ligne erreur-ligne" title="{{ $adhesion->erreur_envoi }}">{{ \Illuminate\Support\Str::limit($adhesion->erreur_envoi, 80) }}</small>
                                 @endif
                             </td>
                             <td>

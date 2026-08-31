@@ -1,4 +1,4 @@
-@props(['statut'])
+@props(['statut', 'titre' => null])
 @php
     $classe = match ($statut) {
         \App\Enums\StatutAdhesion::Envoye => 'vert',
@@ -6,4 +6,4 @@
         default => 'gris',
     };
 @endphp
-<span class="badge {{ $classe }}">{{ $statut->libelle() }}</span>
+<span @class(["badge", $classe, "avec-info" => $titre]) @if ($titre) title="{{ $titre }}" @endif>{{ $statut->libelle() }}</span>

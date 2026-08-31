@@ -166,7 +166,6 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .progression { height: 12px; background: var(--gris); border-radius: 999px; overflow: hidden; margin: 0.75rem 0; }
 .progression-barre { height: 100%; background: var(--vert); transition: width 0.3s; }
 .aide-ligne { display: block; font-size: 0.75rem; color: #55605a; margin-top: 0.2rem; }
-.erreur-ligne { color: var(--rouge); }
 
 .deconnexion { margin-left: auto; }
 .deconnexion button { background: none; border: 1px solid rgba(255,255,255,0.5); color: #fff; border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; font: inherit; font-size: 0.85rem; }
@@ -227,3 +226,4 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .menu-actions-liste a:hover { background: var(--gris-clair); }
 .menu-actions-liste button:disabled { opacity: 0.5; cursor: default; }
 .menu-actions-liste .danger { color: var(--rouge); }
+.badge.avec-info { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
