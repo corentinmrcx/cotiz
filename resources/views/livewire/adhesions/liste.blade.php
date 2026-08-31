@@ -27,6 +27,7 @@
                     </select>
                 </label>
                 <div class="actions">
+                    <a class="bouton secondaire" href="{{ route('import') }}">Importer un classeur</a>
                     <a class="bouton secondaire" href="{{ route('adhesions.nouvelle') }}">Ajouter</a>
                     <button type="button" class="bouton secondaire" wire:click="demarrerGenerationTest" @disabled($traitement)>Générer les cartes en test</button>
                     <button type="button" class="bouton" wire:click="demarrerEnvoi" wire:confirm="Envoyer les cartes par mail à toutes les adhésions non envoyées ?" @disabled($traitement)>Envoyer les cartes</button>

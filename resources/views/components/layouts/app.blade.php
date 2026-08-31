@@ -12,7 +12,6 @@
         <a class="marque" href="{{ route('accueil') }}">CoTiz</a>
         @unless (request()->routeIs('login'))
             <nav class="navigation">
-                <a href="{{ route('import') }}" @class(['actif' => request()->routeIs('import')])>Import</a>
                 <a href="{{ route('adhesions') }}" @class(['actif' => request()->routeIs('adhesions*')])>Adhésions</a>
                 <a href="{{ route('historique') }}" @class(['actif' => request()->routeIs('historique*')])>Historique</a>
                 <a href="{{ route('reglages') }}" @class(['actif' => request()->routeIs('reglages')])>Réglages</a>
