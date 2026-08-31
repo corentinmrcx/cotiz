@@ -1,0 +1,11 @@
+.git
+.env
+/data
+/vendor
+/node_modules
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/tests
+docker-compose.override.yml
