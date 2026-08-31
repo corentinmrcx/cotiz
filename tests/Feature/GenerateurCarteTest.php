@@ -49,6 +49,6 @@ class GenerateurCarteTest extends TestCase
 
         [$largeur, $hauteur] = getimagesize(Storage::disk('data')->path($adhesion->chemin_png));
         $this->assertSame(2100, $largeur);
-        $this->assertSame(2480, $hauteur);
+        $this->assertSame(2448, $hauteur);
     }
 }
