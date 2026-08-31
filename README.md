@@ -21,6 +21,7 @@ Les fois suivantes : `docker compose up -d`.
 
 ## Données
 
-Tout l'état de l'application vit dans `./data` (base SQLite, visuels, cartes
-générées). Ce dossier n'est pas versionné et ne doit jamais être placé dans un
+Tout l'état de l'application vit dans `./data` : base SQLite, clé de
+chiffrement (`app.key`, générée au premier démarrage), visuels, cartes
+générées. Ce dossier n'est pas versionné et ne doit jamais être placé dans un
 dossier synchronisé (Drive, Dropbox…).

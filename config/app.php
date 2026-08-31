@@ -97,7 +97,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY') ?: (is_file(base_path('data/app.key')) ? trim(file_get_contents(base_path('data/app.key'))) : null),
 
     'previous_keys' => [
         ...array_filter(

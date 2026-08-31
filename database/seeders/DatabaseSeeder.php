@@ -8,5 +8,9 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call([
+            SaisonSeeder::class,
+            ReglageSeeder::class,
+        ]);
     }
 }

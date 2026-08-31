@@ -1,0 +1,16 @@
+Bonjour {{prenom}} {{nom}},
+
+Nous vous remercions pour votre adhésion au {{asso_nom}} pour la saison {{saison}}.
+
+Vous trouverez ci-dessous votre carte d'adhérent, également jointe à ce message au format PDF.
+
+Rappel des tarifs de la saison :
+- Adulte : {{tarif_adulte}} €
+- Enfant en famille : {{tarif_enfant_famille}} €
+- Enfant seul : {{tarif_enfant_seul}} €
+
+Votre cotisation : {{cotisation}} €
+
+Bien cordialement,
+Le bureau du {{asso_nom}}
+{{asso_email}}
