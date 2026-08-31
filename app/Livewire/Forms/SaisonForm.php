@@ -18,9 +18,9 @@ class SaisonForm extends Form
 
     public string $tarif_enfant_seul = '';
 
-    public ?TemporaryUploadedFile $visuel_recto = null;
+    public string $couleur = Saison::COULEUR_PAR_DEFAUT;
 
-    public ?TemporaryUploadedFile $visuel_verso = null;
+    public ?TemporaryUploadedFile $logo = null;
 
     public function rules(): array
     {
@@ -29,8 +29,8 @@ class SaisonForm extends Form
             'tarif_adulte' => ['required', 'numeric', 'min:0'],
             'tarif_enfant_famille' => ['required', 'numeric', 'min:0'],
             'tarif_enfant_seul' => ['required', 'numeric', 'min:0'],
-            'visuel_recto' => ['nullable', 'image', 'max:5120'],
-            'visuel_verso' => ['nullable', 'image', 'max:5120'],
+            'couleur' => ['required', 'regex:/^#[0-9a-fA-F]{6}$/'],
+            'logo' => ['nullable', 'file', 'mimes:png,svg', 'max:5120'],
         ];
     }
 
@@ -41,8 +41,8 @@ class SaisonForm extends Form
             'tarif_adulte' => 'tarif adulte',
             'tarif_enfant_famille' => 'tarif enfant en famille',
             'tarif_enfant_seul' => 'tarif enfant seul',
-            'visuel_recto' => 'visuel recto',
-            'visuel_verso' => 'visuel verso',
+            'couleur' => 'couleur',
+            'logo' => 'logo',
         ];
     }
 
@@ -53,8 +53,8 @@ class SaisonForm extends Form
         $this->tarif_adulte = (string) $saison->tarif_adulte;
         $this->tarif_enfant_famille = (string) $saison->tarif_enfant_famille;
         $this->tarif_enfant_seul = (string) $saison->tarif_enfant_seul;
-        $this->visuel_recto = null;
-        $this->visuel_verso = null;
+        $this->couleur = $saison->couleur;
+        $this->logo = null;
     }
 
     public function enregistrer(): void
@@ -66,20 +66,20 @@ class SaisonForm extends Form
             'tarif_adulte' => $this->tarif_adulte,
             'tarif_enfant_famille' => $this->tarif_enfant_famille,
             'tarif_enfant_seul' => $this->tarif_enfant_seul,
-            'visuel_recto' => $this->stockerVisuel($this->visuel_recto, 'recto') ?? $this->saison->visuel_recto,
-            'visuel_verso' => $this->stockerVisuel($this->visuel_verso, 'verso') ?? $this->saison->visuel_verso,
+            'couleur' => strtolower($this->couleur),
+            'logo' => $this->stockerLogo($this->logo) ?? $this->saison->logo,
         ]);
 
         $this->charger($this->saison->fresh());
     }
 
-    private function stockerVisuel(?TemporaryUploadedFile $fichier, string $face): ?string
+    private function stockerLogo(?TemporaryUploadedFile $fichier): ?string
     {
         if ($fichier === null) {
             return null;
         }
 
-        $nom = "saison-{$this->saison->id}-{$face}.".$fichier->getClientOriginalExtension();
+        $nom = "saison-{$this->saison->id}-logo.".$fichier->getClientOriginalExtension();
 
         return $fichier->storeAs('visuels', $nom, 'data');
     }

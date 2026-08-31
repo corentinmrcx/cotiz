@@ -16,7 +16,7 @@ final readonly class DonneesCarte
         public string $assoNom,
         public string $assoEmail,
         public string $assoAdresse,
-        public ?string $fondRecto,
-        public ?string $fondVerso,
+        public string $couleur,
+        public ?string $logo,
     ) {}
 }

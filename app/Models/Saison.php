@@ -7,14 +7,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Saison extends Model
 {
+    public const COULEUR_PAR_DEFAUT = '#1a5632';
+
     protected $fillable = [
         'libelle',
         'tarif_adulte',
         'tarif_enfant_famille',
         'tarif_enfant_seul',
         'active',
-        'visuel_recto',
-        'visuel_verso',
+        'logo',
+        'couleur',
     ];
 
     protected function casts(): array

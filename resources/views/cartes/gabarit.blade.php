@@ -18,20 +18,20 @@
 
         .face {
             --h: {{ $hauteur / 100 }}px;
+            --couleur: {{ $carte->couleur }};
             position: relative;
             width: {{ $largeur }}px;
             height: {{ $hauteur }}px;
             overflow: hidden;
-            background-color: #1a5632;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
+            background: var(--couleur);
+            color: #fff;
             page-break-after: always;
             break-after: page;
         }
 
         .face:last-child { page-break-after: auto; break-after: auto; }
 
-        .face > * { position: absolute; margin: 0; line-height: 1; }
+        .face > * { position: absolute; margin: 0; line-height: 1; white-space: nowrap; }
 
         .tarifs { list-style: none; padding: 0; }
 
@@ -39,15 +39,27 @@
     </style>
 </head>
 <body>
-    <section class="face recto" @if ($carte->fondRecto) style="background-image: url('{{ $carte->fondRecto }}')" @endif>
+    <section class="face recto">
+        @if ($carte->logo)
+            <img class="logo" src="{{ $carte->logo }}" alt="">
+        @endif
+        <p class="titre-ligne-1">CARTE</p>
+        <p class="titre-ligne-2">D’ADHÉRENT</p>
         <p class="saison">{{ $carte->saison }}</p>
+        <p class="asso-nom-recto">{{ mb_strtoupper($carte->assoNom) }}</p>
     </section>
 
-    <section class="face verso" @if ($carte->fondVerso) style="background-image: url('{{ $carte->fondVerso }}')" @endif>
+    <section class="face verso">
+        <div class="bandeau"></div>
         <p class="nom">{{ $carte->nomComplet }}</p>
-        <p class="nb-adultes">{{ $carte->nbAdultes }}</p>
-        <p class="nb-enfants">{{ $carte->nbEnfants }}</p>
-        <p class="cotisation">{{ $carte->cotisation }}</p>
+        <p class="libelle-adultes">NB ADULTES :</p>
+        <p class="libelle-enfants">NB ENFANTS :</p>
+        <p class="libelle-cotisation">COTISATION :</p>
+        <p class="cadre nb-adultes">{{ $carte->nbAdultes }}</p>
+        <p class="cadre nb-enfants">{{ $carte->nbEnfants }}</p>
+        <p class="cadre cotisation">{{ $carte->cotisation }}</p>
+        <p class="euro">€</p>
+        <div class="trait"></div>
         <p class="asso-nom">{{ $carte->assoNom }}</p>
         <p class="asso-email">{{ $carte->assoEmail }}</p>
         <p class="asso-adresse">{{ $carte->assoAdresse }}</p>

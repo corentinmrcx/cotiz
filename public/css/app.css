@@ -175,7 +175,10 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .badge.rouge { background: #f9e5e3; color: var(--rouge); }
 .badge.orange { background: #fbf1dc; color: var(--orange); }
 
-.apercu-visuel { display: block; width: 100%; max-width: 320px; border: 1px solid var(--gris); border-radius: 4px; margin: 0.25rem 0 0.5rem; }
+.couleur { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.25rem; }
+.couleur input[type="color"] { width: 3rem; height: 2.2rem; padding: 0.1rem; border: 1px solid var(--gris); border-radius: 6px; background: #fff; cursor: pointer; }
+.apercu-logo { display: flex; align-items: center; justify-content: center; width: 140px; height: 140px; border-radius: 6px; margin: 0.25rem 0 0.5rem; }
+.apercu-logo img { max-width: 110px; max-height: 110px; }
 
 .barre-outils { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1rem; flex-wrap: wrap; }
 .barre-outils > :last-child { margin-left: auto; }

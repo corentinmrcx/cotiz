@@ -30,8 +30,8 @@ démarrage ; ensuite, tout se modifie depuis l'écran Réglages.
 ## Utilisation
 
 1. **Réglages** — vérifier l'expéditeur, tester la connexion SMTP, relire
-   l'objet et le corps du mail, contrôler les tarifs et les visuels de la
-   saison active. Ouvrir une nouvelle saison en début de campagne.
+   l'objet et le corps du mail, contrôler les tarifs, le logo et la couleur de
+   la saison active. Ouvrir une nouvelle saison en début de campagne.
 2. **Import** — télécharger le classeur modèle (avec les tarifs de la saison),
    le transmettre à la trésorière, puis déposer le classeur rempli. L'écran de
    contrôle sépare lignes valides, avertissements et rejets. Rien n'est écrit
@@ -43,8 +43,10 @@ démarrage ; ensuite, tout se modifie depuis l'écran Réglages.
 4. **Historique** — consultation des saisons passées et export ZIP (CSV des
    adhésions + tous les PDF), à déposer sur le Drive de l'association.
 
-Aperçu du gabarit de carte sur données fictives : <http://localhost:8000/cartes/apercu>.
-Les coordonnées des champs sont dans `resources/cartes/gabarit.css`.
+La carte est entièrement dessinée en HTML/CSS (seul le logo est une image).
+Aperçu sur données fictives : <http://localhost:8000/cartes/apercu>. Toute la
+géométrie est dans `resources/cartes/gabarit.css` ; les exports Canva d'origine
+sont gardés en référence dans `docs/reference-canva/`.
 
 ## Données, sauvegarde et restauration
 
@@ -99,8 +101,8 @@ puis installer les dépendances une fois : `docker compose exec app composer ins
 | `app/Livewire` | Composants d'écran, qui orchestrent les services sans logique métier |
 | `app/Dto` | Objets de transfert (`LigneAdhesion`, `VerdictLigne`, `DonneesCarte`) |
 | `resources/views/cartes` | Gabarit de carte (recto/verso) |
-| `resources/cartes/gabarit.css` | Coordonnées des champs de la carte |
-| `database/seeders` | Saison, réglages et compte par défaut ; visuels initiaux |
+| `resources/cartes/gabarit.css` | Géométrie complète de la carte |
+| `database/seeders` | Saison, réglages et compte par défaut ; logo initial |
 
 ## Mode production (différé)
 

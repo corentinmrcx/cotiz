@@ -38,7 +38,7 @@
                     </select>
                     @error('nouvelleAnnee') <span class="champ-erreur">{{ $message }}</span> @enderror
                 </label>
-                <p class="aide">La saison <strong>{{ $libelleNouvelleSaison }}</strong> sera créée. Les tarifs et les visuels de la saison active sont repris et restent modifiables.</p>
+                <p class="aide">La saison <strong>{{ $libelleNouvelleSaison }}</strong> sera créée. Les tarifs, le logo et la couleur de la saison active sont repris et restent modifiables.</p>
                 <button type="submit" class="bouton secondaire">Ouvrir et activer</button>
             </form>
         </div>
@@ -65,24 +65,27 @@
                     </label>
                 </div>
                 <div class="grille-2">
-                    <label>Visuel recto
-                        @if ($form->saison->visuel_recto)
-                            <img class="apercu-visuel" src="{{ route('visuels.afficher', [$form->saison, 'recto']) }}?v={{ $form->saison->updated_at->timestamp }}" alt="Recto actuel">
-                        @endif
-                        <input type="file" accept="image/*" wire:model="form.visuel_recto">
-                        @error('form.visuel_recto') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    <label>Couleur principale
+                        <span class="couleur">
+                            <input type="color" wire:model.live="form.couleur">
+                            <code>{{ $form->couleur }}</code>
+                        </span>
+                        @error('form.couleur') <span class="champ-erreur">{{ $message }}</span> @enderror
                     </label>
-                    <label>Visuel verso
-                        @if ($form->saison->visuel_verso)
-                            <img class="apercu-visuel" src="{{ route('visuels.afficher', [$form->saison, 'verso']) }}?v={{ $form->saison->updated_at->timestamp }}" alt="Verso actuel">
+                    <label>Logo (PNG ou SVG, blanc sur fond transparent)
+                        @if ($form->saison->logo)
+                            <span class="apercu-logo" style="background: {{ $form->couleur }}">
+                                <img src="{{ route('saisons.logo', $form->saison) }}?v={{ $form->saison->updated_at->timestamp }}" alt="Logo actuel">
+                            </span>
                         @endif
-                        <input type="file" accept="image/*" wire:model="form.visuel_verso">
-                        @error('form.visuel_verso') <span class="champ-erreur">{{ $message }}</span> @enderror
+                        <input type="file" accept=".png,.svg,image/png,image/svg+xml" wire:model="form.logo">
+                        @error('form.logo') <span class="champ-erreur">{{ $message }}</span> @enderror
                     </label>
                 </div>
+                <p class="aide"><a href="{{ route('cartes.apercu') }}" target="_blank">Aperçu de la carte</a> avec les réglages enregistrés.</p>
                 <div class="actions">
                     <button type="submit" class="bouton" wire:loading.attr="disabled">Enregistrer la saison</button>
-                    <span wire:loading wire:target="form.visuel_recto,form.visuel_verso">Téléversement…</span>
+                    <span wire:loading wire:target="form.logo">Téléversement…</span>
                 </div>
             </form>
         @endif

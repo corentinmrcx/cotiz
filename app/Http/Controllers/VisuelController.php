@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class VisuelController extends Controller
 {
-    public function afficher(Saison $saison, string $face): StreamedResponse
+    public function logo(Saison $saison): StreamedResponse
     {
-        $chemin = $face === 'recto' ? $saison->visuel_recto : $saison->visuel_verso;
+        $chemin = $saison->logo;
 
         abort_if($chemin === null || ! Storage::disk('data')->exists($chemin), 404);
 

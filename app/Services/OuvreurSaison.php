@@ -16,13 +16,11 @@ class OuvreurSaison
             'tarif_adulte' => $tarifAdulte,
             'tarif_enfant_famille' => $tarifEnfantFamille,
             'tarif_enfant_seul' => $tarifEnfantSeul,
+            'couleur' => $saisonPrecedente?->couleur ?? Saison::COULEUR_PAR_DEFAUT,
         ]);
 
         if ($saisonPrecedente !== null) {
-            $saison->update([
-                'visuel_recto' => $this->copierVisuel($saisonPrecedente->visuel_recto, $saison, 'recto'),
-                'visuel_verso' => $this->copierVisuel($saisonPrecedente->visuel_verso, $saison, 'verso'),
-            ]);
+            $saison->update(['logo' => $this->copierLogo($saisonPrecedente->logo, $saison)]);
         }
 
         $saison->activer();
@@ -30,14 +28,14 @@ class OuvreurSaison
         return $saison;
     }
 
-    private function copierVisuel(?string $cheminSource, Saison $saison, string $face): ?string
+    private function copierLogo(?string $cheminSource, Saison $saison): ?string
     {
         if ($cheminSource === null || ! Storage::disk('data')->exists($cheminSource)) {
             return null;
         }
 
         $extension = pathinfo($cheminSource, PATHINFO_EXTENSION);
-        $destination = "visuels/saison-{$saison->id}-{$face}.{$extension}";
+        $destination = "visuels/saison-{$saison->id}-logo.{$extension}";
 
         Storage::disk('data')->copy($cheminSource, $destination);
 

@@ -31,9 +31,7 @@ Route::middleware(RequireAuthWhenEnabled::class)->group(function () {
 
     Route::view('/reglages', 'reglages')->name('reglages');
 
-    Route::get('/visuels/{saison}/{face}', [VisuelController::class, 'afficher'])
-        ->whereIn('face', ['recto', 'verso'])
-        ->name('visuels.afficher');
+    Route::get('/saisons/{saison}/logo', [VisuelController::class, 'logo'])->name('saisons.logo');
     Route::get('/cartes/apercu', [ApercuCarteController::class, 'afficher'])->name('cartes.apercu');
     Route::get('/cartes/{adhesion}/{format}', [FichierCarteController::class, 'afficher'])
         ->whereIn('format', ['pdf', 'png'])

@@ -37,8 +37,8 @@ class RenduCarte
             assoNom: Reglage::valeur(CleReglage::AssoNom, ''),
             assoEmail: Reglage::valeur(CleReglage::AssoEmailAffiche, ''),
             assoAdresse: Reglage::valeur(CleReglage::AssoAdresse, ''),
-            fondRecto: $this->visuelEnDataUri($saison->visuel_recto),
-            fondVerso: $this->visuelEnDataUri($saison->visuel_verso),
+            couleur: $saison->couleur,
+            logo: $this->visuelEnDataUri($saison->logo),
         );
     }
 

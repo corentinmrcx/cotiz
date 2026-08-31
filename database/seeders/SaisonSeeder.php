@@ -14,22 +14,22 @@ class SaisonSeeder extends Seeder
             return;
         }
 
-        Saison::query()->create([
+        $saison = Saison::query()->create([
             'libelle' => '2025-2026',
             'tarif_adulte' => 8,
             'tarif_enfant_famille' => 3,
             'tarif_enfant_seul' => 6,
             'active' => true,
-            'visuel_recto' => $this->copierVisuelInitial('recto.png'),
-            'visuel_verso' => $this->copierVisuelInitial('verso.png'),
         ]);
+
+        $saison->update(['logo' => $this->copierLogoInitial($saison)]);
     }
 
-    private function copierVisuelInitial(string $fichier): string
+    private function copierLogoInitial(Saison $saison): string
     {
-        $chemin = 'visuels/'.$fichier;
+        $chemin = "visuels/saison-{$saison->id}-logo.png";
 
-        Storage::disk('data')->put($chemin, file_get_contents(__DIR__.'/visuels/'.$fichier));
+        Storage::disk('data')->put($chemin, file_get_contents(__DIR__.'/visuels/logo.png'));
 
         return $chemin;
     }

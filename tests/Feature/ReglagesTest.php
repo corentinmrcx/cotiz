@@ -86,7 +86,18 @@ class ReglagesTest extends TestCase
         $this->assertSame('8.00', $nouvelle->tarif_adulte);
         $this->assertSame('2627', $nouvelle->prefixeNumero());
         $this->assertSame(1, Saison::query()->where('active', true)->count());
-        Storage::disk('data')->assertExists($nouvelle->visuel_recto);
+        $this->assertSame('#1a5632', $nouvelle->couleur);
+        Storage::disk('data')->assertExists($nouvelle->logo);
+    }
+
+    public function test_la_couleur_de_la_saison_est_modifiable(): void
+    {
+        Livewire::test(Saisons::class)
+            ->set('form.couleur', '#0B3D91')
+            ->call('enregistrer')
+            ->assertHasNoErrors();
+
+        $this->assertSame('#0b3d91', Saison::active()->couleur);
     }
 
     public function test_un_libelle_de_saison_deja_utilise_est_refuse(): void
