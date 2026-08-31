@@ -1,122 +1,165 @@
+<div align="center">
+
 # CoTiz
 
-Cartes d'adhérent dématérialisées du Foyer de Soudron : import du classeur de
-la trésorière, génération des cartes en PDF et PNG, envoi des mails avec suivi,
-historique par saison et export ZIP.
+**Cartes d'adhérent dématérialisées, générées et envoyées en un clic.**
 
-Le cadrage complet (décisions, modèle de données, format d'import, lots) est
-dans [`claude.md`](claude.md). Ce fichier en est le contrat.
+Import du classeur de la trésorière → génération des cartes PDF/PNG → envoi
+personnalisé par mail, avec suivi. Conçu pour le Foyer de Soudron, pensé pour
+durer après son auteur.
+
+![Laravel 12](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)
+![PHP 8.3](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white)
+![Livewire 3](https://img.shields.io/badge/Livewire-3-FB70A9?logo=livewire&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-base%20unique-003B57?logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-un%20seul%20service-2496ED?logo=docker&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-PHPUnit%20%2B%20Livewire-4CAF50)
+
+<img src="docs/captures/carte.png" alt="Carte d'adhérent générée (recto et verso)" width="560">
+
+</div>
+
+---
+
+## Le problème
+
+Chaque année, l'association délivre ses cartes d'adhérent : création manuelle
+de chaque carte dans Canva, export, nommage du fichier, rédaction d'un mail
+personnalisé, pièce jointe, envoi… pour des dizaines d'adhérents. Un processus
+chronophage, et qui a déjà produit des erreurs de saisie — la pire étant une
+cotisation fausse sur une carte officielle.
+
+## La solution
+
+Un outil web **local** (Docker, un seul service) utilisé quelques jours par an :
+
+1. la trésorière remplit un **classeur normalisé** (généré par l'outil, avec
+   listes déroulantes, formules et contrôle d'écart intégrés) ;
+2. CoTiz **importe** le classeur avec un écran de contrôle — lignes valides,
+   avertissements, rejets — sans rien écrire avant validation ;
+3. la **cotisation est calculée, jamais saisie** : la classe d'erreur qui
+   posait problème n'existe plus ;
+4. les **cartes** sont générées en PDF (pièce jointe) et PNG (intégré au
+   corps du mail), d'abord en **mode test** sans aucun envoi ;
+5. l'**envoi** se fait adhésion par adhésion, piloté par le navigateur, avec
+   barre de progression, statut par adhésion, renvoi unitaire et copie cachée
+   systématique vers l'expéditeur.
+
+![Écran Adhésions](docs/captures/adhesions.png)
+
+## Fonctionnalités
+
+- **Import XLSX/CSV** contrôlé : rejets et avertissements motivés ligne par
+  ligne (homonymes, écart entre montant encaissé et cotisation calculée…)
+- **Classeur modèle téléchargeable**, pré-rempli avec les tarifs de la saison
+- **Carte 100 % HTML/CSS** : aucun fond d'image, rendu vectoriel net ; logo,
+  couleur, tarifs, textes — tout se règle depuis l'écran Réglages
+- **Saisons historisées** : une carte de 2025-2026 rééditée plus tard affiche
+  les tarifs et la charte de 2025-2026
+- **Mail personnalisable** en texte riche (variables `{{prenom}}`,
+  `{{cotisation}}`…), test de connexion SMTP intégré
+- **Sauvegarde en un clic** : archive complète restaurable sur n'importe
+  quelle installation, bandeau d'alerte tant que des modifications ne sont
+  pas exportées
+- **Historique** par saison, **saisie manuelle** pour les corrections,
+  **authentification désactivable** (inutile en local, prête pour une mise
+  en ligne)
+
+![Écran Réglages](docs/captures/reglages.png)
 
 ## Démarrage
 
-Prérequis : Docker et Docker Compose. Rien d'autre à installer.
+Prérequis : Docker et Docker Compose. Rien d'autre.
 
 ```bash
 git clone git@github.com:corentinmarcoux/cotiz.git && cd cotiz
-cp .env.example .env
+cp .env.example .env      # renseigner le mot de passe d'application SMTP
 docker compose up -d
 ```
 
-Puis ouvrir <http://localhost:8000>. Le premier démarrage construit l'image
-(quelques minutes), génère la clé de chiffrement, crée la base et la saison
-par défaut.
+Puis <http://localhost:8000>. Le premier démarrage construit l'image, génère
+la clé de chiffrement, migre et seed la base — aucune commande `artisan` à
+taper. Les fois suivantes : `docker compose up -d`.
 
-Les fois suivantes : `docker compose up -d` (ou `make up`).
+Aperçu du gabarit de carte sur données fictives : `/cartes/apercu`.
 
-Le `.env` contient le mot de passe d'application Gmail (`MAIL_PASSWORD`).
-Il n'est jamais commité. Ces valeurs initialisent les Réglages au premier
-démarrage ; ensuite, tout se modifie depuis l'écran Réglages.
+## Architecture
 
-## Utilisation
+### Choix structurants
 
-1. **Réglages** — vérifier l'expéditeur, tester la connexion SMTP, relire
-   l'objet et le corps du mail, contrôler les tarifs, le logo et la couleur de
-   la saison active. Ouvrir une nouvelle saison en début de campagne.
-2. **Import** — télécharger le classeur modèle (avec les tarifs de la saison),
-   le transmettre à la trésorière, puis déposer le classeur rempli. L'écran de
-   contrôle sépare lignes valides, avertissements et rejets. Rien n'est écrit
-   avant validation.
-3. **Adhésions** — *Générer les cartes en test* produit les PDF et PNG sans
-   envoi, pour vérification. *Envoyer les cartes* envoie un mail par adhésion,
-   une requête à la fois, avec barre de progression. *Renvoyer* pour un cas
-   unitaire. Saisie manuelle pour les corrections et les adhérents tardifs.
-4. **Historique** — consultation des saisons passées.
-5. **Réglages → Sauvegarde** — export complet de l'outil (à déposer sur le
-   Drive de l'association) et restauration d'une sauvegarde.
-
-La carte est entièrement dessinée en HTML/CSS (seul le logo est une image).
-Aperçu sur données fictives : <http://localhost:8000/cartes/apercu>. Toute la
-géométrie est dans `resources/cartes/gabarit.css` ; les exports Canva d'origine
-sont gardés en référence dans `docs/reference-canva/`.
-
-## Données, sauvegarde et restauration
-
-Tout l'état de l'application vit dans `./data` : base SQLite, clé de
-chiffrement (`app.key`), visuels, cartes générées. Ce dossier n'est pas
-versionné et **ne doit jamais être placé dans un dossier synchronisé**
-(Drive, kDrive, Dropbox) : SQLite et la synchronisation de fichiers font
-mauvais ménage.
-
-**La sauvegarde officielle se fait depuis l'application** : Réglages →
-Sauvegarde → « Télécharger la sauvegarde » produit une archive complète
-(données, réglages, logos, cartes) restaurable depuis le même écran sur
-n'importe quelle installation, même avec une autre clé de chiffrement. Un
-bandeau d'alerte s'affiche tant que des modifications n'ont pas été exportées.
-
-En complément, deux commandes bas niveau copient `./data` tel quel :
-
-```bash
-make backup                              # produit data-AAAA-MM-JJ.zip à la racine
-make restore ARCHIVE=data-2026-09-15.zip # remplace ./data (l'ancien est conservé en data.avant-restauration-*)
-```
-
-Reprendre le travail sur une autre machine : `git clone`, `cp .env.example .env`
-(et renseigner le mot de passe SMTP), `docker compose up -d`, puis restaurer la
-sauvegarde depuis l'écran Réglages.
-
-## Authentification
-
-Désactivée par défaut (`APP_AUTH_ENABLED=false`) : en local, rien n'est exposé
-au réseau. Le jour d'une mise en ligne, passer à `true` : un compte est créé au
-démarrage depuis `APP_AUTH_EMAIL` et `APP_AUTH_PASSWORD`.
-
-## Développement
-
-```bash
-make test                      # suite de tests dans le conteneur
-docker compose exec app ./vendor/bin/pint   # style de code
-```
-
-Pour travailler sur le code sans reconstruire l'image à chaque modification,
-créer un `docker-compose.override.yml` (ignoré par Git) qui monte le dépôt :
-
-```yaml
-services:
-  app:
-    volumes:
-      - .:/app:z
-      - ./data:/app/data:z
-    user: "1000:1000"
-    environment:
-      HOME: /tmp
-```
-
-puis installer les dépendances une fois : `docker compose exec app composer install`.
-
-### Organisation du code
-
-| Dossier | Contenu |
+| Choix | Pourquoi |
 |---|---|
-| `app/Services` | Règles métier, chacune à un seul endroit : `CalculateurCotisation`, `LecteurClasseur`, `ValidateurImport`, `EnregistreurAdhesion`, `GenerateurCarte`, `EnvoyeurCarte`, `ExportateurSaison`… |
-| `app/Livewire` | Composants d'écran, qui orchestrent les services sans logique métier |
-| `app/Dto` | Objets de transfert (`LigneAdhesion`, `VerdictLigne`, `DonneesCarte`) |
-| `resources/views/cartes` | Gabarit de carte (recto/verso) |
-| `resources/cartes/gabarit.css` | Géométrie complète de la carte |
-| `database/seeders` | Saison, réglages et compte par défaut ; logo initial |
+| Local d'abord, conteneurisé dès le premier jour | L'outil tourne sur le poste de l'opérateur ; le jour où l'asso a un serveur, la mise en production est un fichier compose, pas une réécriture |
+| SQLite, bind mount sur `./data` | Volumétrie négligeable ; tout l'état (base, clé, logos, cartes) est un dossier visible et sauvegardable |
+| Carte en HTML/CSS convertie par Chromium (Browsershot) | Un successeur ajuste une position dans un fichier CSS commenté, sans toucher à une image |
+| Envoi séquentiel piloté par le navigateur | Une requête par adhésion : pas de file d'attente, pas de timeout, opération reprenable |
+| Aucune valeur métier en dur | Tarifs, textes, expéditeur, logo, couleur : tout est en base, éditable depuis l'écran Réglages |
+| Sauvegarde applicative | Les secrets sont déchiffrés à l'export et re-chiffrés à la restauration : l'archive est indépendante de la clé de l'installation |
 
-## Mode production (différé)
+### Séparation des responsabilités
 
-Non implémenté. Le jour venu : un `docker-compose.prod.yml` avec
-`APP_AUTH_ENABLED=true`, `read_only` avec le volume de données monté sur
-`/app/data` et un `tmpfs` sur `/tmp` et `/app/storage`, `pids_limit: 256`,
-`mem_limit: 1g`, `shm_size: 512m`. Voir la section 10 du cadrage.
+Les composants Livewire orchestrent, ils ne calculent pas. Chaque règle métier
+vit dans un service unique :
+
+| Service | Responsabilité |
+|---|---|
+| `CalculateurCotisation` | Effectifs + tarifs d'une saison → montant |
+| `LecteurClasseur` | Classeur XLSX/CSV → collection de DTO `LigneAdhesion` |
+| `ValidateurImport` | DTO → verdict valide / avertissement / rejet |
+| `EnregistreurAdhesion` | DTO → adhésion persistée (réutilisable hors écran) |
+| `GenerateurCarte` | Adhésion → fichiers PDF et PNG |
+| `EnvoyeurCarte` | Adhésion → mail envoyé, statut mis à jour |
+| `ComposeurMail` | Gabarits + variables → objet et corps du mail |
+| `SauvegardeApplication` | Tout l'état ↔ archive ZIP restaurable |
+
+Le cadrage complet — décisions datées, modèle de données, contrat d'import,
+journal des arbitrages — est dans [`claude.md`](claude.md) : c'est le contrat
+du projet, tenu à jour à chaque évolution.
+
+### Structure
+
+```
+app/
+├── Dto/            LigneAdhesion, VerdictLigne, DonneesCarte
+├── Enums/          StatutAdhesion, CleReglage, NiveauVerdict
+├── Livewire/       Écrans (Import, Adhésions, Réglages) — orchestration seulement
+├── Mail/           CarteAdherentMail (PNG intégré + PDF joint)
+└── Services/       Les règles métier, une classe par responsabilité
+resources/
+├── cartes/         gabarit.css — toute la géométrie de la carte, commentée
+└── views/          Blade : écrans, gabarit de carte, mails
+data/               Tout l'état : SQLite, clé, logos, cartes générées (non versionné)
+```
+
+## Qualité
+
+- **Tests ciblés** là où une erreur silencieuse coûterait cher : calcul de
+  cotisation, lecture du classeur, validation d'import, génération de bout en
+  bout (vrai Chromium), envoi, sauvegarde/restauration, authentification —
+  `make test`
+- **Laravel Pint** pour le style
+- Nommage français pour le domaine métier, anglais pour l'infrastructure
+- Aucun commentaire nécessaire : le code se lit par ses noms (exception
+  volontaire : le CSS de la carte, commenté pour un successeur non développeur)
+
+## Données et sauvegarde
+
+Tout vit dans `./data`, jamais dans un dossier synchronisé (SQLite et la
+synchronisation de fichiers font mauvais ménage). La sauvegarde officielle se
+fait depuis **Réglages → Sauvegarde** ; en complément, `make backup` /
+`make restore ARCHIVE=…` copient le dossier tel quel.
+
+## Production (différé, préparé)
+
+Rien n'empêche une mise en ligne : configuration par variables
+d'environnement, aucun chemin en dur, authentification prête derrière
+`APP_AUTH_ENABLED`. Le gabarit de durcissement (read_only, pids_limit adapté à
+Chromium, shm_size…) est documenté dans le cadrage, section 10.
+
+---
+
+<div align="center">
+
+Développé par [Corentin Marcoux](https://codepp.fr) · Propulsé par **Codepp**
+
+</div>
