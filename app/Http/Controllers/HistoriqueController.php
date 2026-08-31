@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatutAdhesion;
 use App\Models\Saison;
-use App\Services\ExportateurSaison;
 use Illuminate\Contracts\View\View;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class HistoriqueController extends Controller
 {
@@ -26,12 +24,5 @@ class HistoriqueController extends Controller
             'saison' => $saison,
             'adhesions' => $saison->adhesions()->with('destinataires')->orderBy('numero')->get(),
         ]);
-    }
-
-    public function exporter(Saison $saison, ExportateurSaison $exportateur): BinaryFileResponse
-    {
-        return response()
-            ->download($exportateur->exporter($saison), $exportateur->nomArchive($saison))
-            ->deleteFileAfterSend();
     }
 }

@@ -15,12 +15,11 @@
                         <td>{{ $saison->envoyees_count }}</td>
                         <td class="actions-ligne">
                             <a class="bouton petit secondaire" href="{{ route('historique.saison', $saison) }}">Consulter</a>
-                            <a class="bouton petit secondaire" href="{{ route('historique.export', $saison) }}">Exporter (ZIP)</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <p class="aide">Le ZIP contient le CSV des adhésions et l'ensemble des cartes PDF générées. Déposez-le sur le Drive de l'association après chaque campagne.</p>
+        <p class="aide">La sauvegarde complète de l'outil se fait depuis l'écran Réglages.</p>
     </section>
 </x-layouts.app>

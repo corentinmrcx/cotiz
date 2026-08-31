@@ -24,6 +24,12 @@
             @endauth
         @endunless
     </header>
+    @if (($modificationsNonExportees ?? false) && ! request()->routeIs('login'))
+        <div class="bandeau-alerte">
+            Certaines données ne sont pas exportées. L'export tient lieu de sauvegarde de cet outil local.
+            <a href="{{ route('sauvegarde.telecharger') }}">Exporter maintenant</a>
+        </div>
+    @endif
     <main class="contenu">
         {{ $slot }}
     </main>

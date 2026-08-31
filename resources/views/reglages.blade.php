@@ -3,4 +3,5 @@
 
     <livewire:reglages.saisons />
     <livewire:reglages.parametres />
+    <livewire:reglages.sauvegarde />
 </x-layouts.app>

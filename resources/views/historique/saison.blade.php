@@ -6,7 +6,6 @@
             <div>{{ $adhesions->count() }} adhésion(s)</div>
             <div class="actions">
                 <a class="bouton secondaire" href="{{ route('historique') }}">Retour</a>
-                <a class="bouton" href="{{ route('historique.export', $saison) }}">Exporter (ZIP)</a>
             </div>
         </div>
         <table class="tableau">

@@ -40,8 +40,9 @@ démarrage ; ensuite, tout se modifie depuis l'écran Réglages.
    envoi, pour vérification. *Envoyer les cartes* envoie un mail par adhésion,
    une requête à la fois, avec barre de progression. *Renvoyer* pour un cas
    unitaire. Saisie manuelle pour les corrections et les adhérents tardifs.
-4. **Historique** — consultation des saisons passées et export ZIP (CSV des
-   adhésions + tous les PDF), à déposer sur le Drive de l'association.
+4. **Historique** — consultation des saisons passées.
+5. **Réglages → Sauvegarde** — export complet de l'outil (à déposer sur le
+   Drive de l'association) et restauration d'une sauvegarde.
 
 La carte est entièrement dessinée en HTML/CSS (seul le logo est une image).
 Aperçu sur données fictives : <http://localhost:8000/cartes/apercu>. Toute la
@@ -56,13 +57,22 @@ versionné et **ne doit jamais être placé dans un dossier synchronisé**
 (Drive, kDrive, Dropbox) : SQLite et la synchronisation de fichiers font
 mauvais ménage.
 
+**La sauvegarde officielle se fait depuis l'application** : Réglages →
+Sauvegarde → « Télécharger la sauvegarde » produit une archive complète
+(données, réglages, logos, cartes) restaurable depuis le même écran sur
+n'importe quelle installation, même avec une autre clé de chiffrement. Un
+bandeau d'alerte s'affiche tant que des modifications n'ont pas été exportées.
+
+En complément, deux commandes bas niveau copient `./data` tel quel :
+
 ```bash
 make backup                              # produit data-AAAA-MM-JJ.zip à la racine
 make restore ARCHIVE=data-2026-09-15.zip # remplace ./data (l'ancien est conservé en data.avant-restauration-*)
 ```
 
 Reprendre le travail sur une autre machine : `git clone`, `cp .env.example .env`
-(et renseigner le mot de passe SMTP), `make restore ARCHIVE=...`.
+(et renseigner le mot de passe SMTP), `docker compose up -d`, puis restaurer la
+sauvegarde depuis l'écran Réglages.
 
 ## Authentification
 

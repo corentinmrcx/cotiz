@@ -27,6 +27,12 @@ RUN apt-get update \
 RUN npm install -g puppeteer@24 \
     && npm cache clean --force
 
+RUN { \
+        echo "upload_max_filesize = 512M"; \
+        echo "post_max_size = 512M"; \
+        echo "memory_limit = 512M"; \
+    } > /usr/local/etc/php/conf.d/cotiz.ini
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app

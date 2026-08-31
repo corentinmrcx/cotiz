@@ -256,3 +256,14 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .encart { border: 1px solid var(--gris); border-radius: 6px; padding: 0.9rem 1rem 0.1rem; background: var(--gris-clair); }
 
 .defilement-x { overflow-x: auto; }
+
+.bandeau-alerte {
+    flex-shrink: 0;
+    padding: 0.45rem 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    background: #fbf1dc;
+    color: var(--orange);
+    border-bottom: 1px solid #ecd9ac;
+}
+.bandeau-alerte a { color: inherit; font-weight: 600; }

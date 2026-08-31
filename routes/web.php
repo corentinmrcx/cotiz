@@ -5,6 +5,7 @@ use App\Http\Controllers\ClasseurModeleController;
 use App\Http\Controllers\FichierCarteController;
 use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SauvegardeController;
 use App\Http\Controllers\VisuelController;
 use App\Http\Middleware\RequireAuthWhenEnabled;
 use App\Models\Adhesion;
@@ -27,9 +28,9 @@ Route::middleware(RequireAuthWhenEnabled::class)->group(function () {
 
     Route::get('/historique', [HistoriqueController::class, 'index'])->name('historique');
     Route::get('/historique/{saison}', [HistoriqueController::class, 'saison'])->name('historique.saison');
-    Route::get('/historique/{saison}/export', [HistoriqueController::class, 'exporter'])->name('historique.export');
 
     Route::view('/reglages', 'reglages')->name('reglages');
+    Route::get('/sauvegarde', [SauvegardeController::class, 'telecharger'])->name('sauvegarde.telecharger');
 
     Route::get('/saisons/{saison}/logo', [VisuelController::class, 'logo'])->name('saisons.logo');
     Route::get('/cartes/apercu', [ApercuCarteController::class, 'afficher'])->name('cartes.apercu');
