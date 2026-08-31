@@ -76,7 +76,7 @@
                     <button type="button" data-commande="underline" title="Souligné"><u>S</u></button>
                 </div>
                 <div id="corps-editeur" class="editeur-zone" contenteditable="true" wire:ignore>{!! \App\Services\NettoyeurHtmlMail::enHtml($form->mail_corps) !!}</div>
-                <textarea id="corps-cache" wire:model="form.mail_corps" hidden></textarea>
+                <textarea id="corps-cache" wire:model="form.mail_corps" hidden style="display: none"></textarea>
             </div>
             @error('form.mail_corps') <span class="champ-erreur">{{ $message }}</span> @enderror
             <script>
