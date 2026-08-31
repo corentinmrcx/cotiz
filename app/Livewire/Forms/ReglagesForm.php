@@ -4,6 +4,7 @@ namespace App\Livewire\Forms;
 
 use App\Enums\CleReglage;
 use App\Models\Reglage;
+use App\Services\NettoyeurHtmlMail;
 use Livewire\Form;
 
 class ReglagesForm extends Form
@@ -105,6 +106,10 @@ class ReglagesForm extends Form
 
         if ($cle === CleReglage::SmtpPassword) {
             return str_replace(' ', '', $this->smtp_password);
+        }
+
+        if ($cle === CleReglage::MailCorps) {
+            return NettoyeurHtmlMail::nettoyer($this->mail_corps);
         }
 
         return (string) $this->{$cle->value};

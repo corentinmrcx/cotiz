@@ -55,7 +55,8 @@ class EnvoyeurCarte
     {
         return new CarteAdherentMail(
             objet: $this->composeur->objet($adhesion),
-            corps: $this->composeur->corps($adhesion),
+            corpsHtml: $this->composeur->corpsHtml($adhesion),
+            corpsTexte: $this->composeur->corpsTexte($adhesion),
             cheminPng: Storage::disk('data')->path($adhesion->chemin_png),
             cheminPdf: Storage::disk('data')->path($adhesion->chemin_pdf),
             nomFichierPdf: basename($adhesion->chemin_pdf),

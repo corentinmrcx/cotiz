@@ -68,10 +68,36 @@
                 <input type="text" wire:model="form.mail_objet">
                 @error('form.mail_objet') <span class="champ-erreur">{{ $message }}</span> @enderror
             </label>
-            <label>Corps
-                <textarea rows="14" wire:model="form.mail_corps"></textarea>
-                @error('form.mail_corps') <span class="champ-erreur">{{ $message }}</span> @enderror
-            </label>
+            <label for="corps-editeur">Corps</label>
+            <div class="editeur">
+                <div class="editeur-outils">
+                    <button type="button" data-commande="bold" title="Gras"><b>G</b></button>
+                    <button type="button" data-commande="italic" title="Italique"><i>I</i></button>
+                    <button type="button" data-commande="underline" title="Souligné"><u>S</u></button>
+                </div>
+                <div id="corps-editeur" class="editeur-zone" contenteditable="true" wire:ignore>{!! \App\Services\NettoyeurHtmlMail::enHtml($form->mail_corps) !!}</div>
+                <textarea id="corps-cache" wire:model="form.mail_corps" hidden></textarea>
+            </div>
+            @error('form.mail_corps') <span class="champ-erreur">{{ $message }}</span> @enderror
+            <script>
+                (() => {
+                    const zone = document.getElementById('corps-editeur');
+                    const cache = document.getElementById('corps-cache');
+                    const synchroniser = () => {
+                        cache.value = zone.innerHTML;
+                        cache.dispatchEvent(new Event('input', { bubbles: true }));
+                    };
+                    zone.addEventListener('input', synchroniser);
+                    document.querySelectorAll('.editeur-outils button').forEach((bouton) => {
+                        bouton.addEventListener('click', () => {
+                            zone.focus();
+                            document.execCommand(bouton.dataset.commande);
+                            synchroniser();
+                        });
+                    });
+                    synchroniser();
+                })();
+            </script>
             <p class="aide">
                 Variables disponibles :
                 @foreach (['nom', 'prenom', 'saison', 'cotisation', 'nb_adultes', 'nb_enfants', 'tarif_adulte', 'tarif_enfant_famille', 'tarif_enfant_seul', 'asso_nom', 'asso_email'] as $variable)
@@ -104,6 +130,9 @@
 
         <div class="actions">
             <button type="submit" class="bouton">Enregistrer les réglages</button>
+            @if ($this->message)
+                <span class="confirmation">{{ $this->message }}</span>
+            @endif
         </div>
     </form>
 </section>

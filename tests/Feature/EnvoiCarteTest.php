@@ -41,6 +41,10 @@ class EnvoiCarteTest extends TestCase
 
         $this->assertSame('Votre carte d\'adhérent 2025-2026 — Foyer de Soudron', $composeur->objet($adhesion));
         $this->assertSame('Bonjour Marie DUPONT, 19 € pour 2 adulte(s) et 1 enfant(s), saison 2025-2026. Foyer de Soudron {{inconnue}}', $composeur->corps($adhesion));
+
+        Reglage::definir(CleReglage::MailCorps, '<p>Bonjour <b>{{prenom}}</b></p><script>vilain()</script><p>À bientôt</p>');
+        $this->assertSame('<p>Bonjour <b>Marie</b></p>vilain()<p>À bientôt</p>', $composeur->corpsHtml($adhesion));
+        $this->assertSame("Bonjour Marie\nvilain()À bientôt", $composeur->corpsTexte($adhesion));
     }
 
     public function test_l_envoi_joint_le_pdf_integre_le_png_et_met_le_statut_a_envoye(): void

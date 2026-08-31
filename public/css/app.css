@@ -268,3 +268,18 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 
 .entete-page { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
 .entete-page h1 { margin: 0; }
+
+.editeur { border: 1px solid var(--gris); border-radius: 6px; margin-top: 0.25rem; background: #fff; }
+.editeur-outils { display: flex; gap: 0.25rem; padding: 0.35rem; border-bottom: 1px solid var(--gris); }
+.editeur-outils button {
+    width: 2rem;
+    height: 2rem;
+    font: inherit;
+    background: #fff;
+    border: 1px solid var(--gris);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.editeur-outils button:hover { background: var(--gris-clair); }
+.editeur-zone { min-height: 16rem; padding: 0.6rem 0.75rem; font-weight: 400; outline: none; overflow-y: auto; }
+.confirmation { color: var(--vert-fonce); font-weight: 600; }

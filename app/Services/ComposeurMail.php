@@ -18,6 +18,16 @@ class ComposeurMail
         return $this->remplacerVariables(Reglage::valeur(CleReglage::MailCorps, ''), $adhesion);
     }
 
+    public function corpsHtml(Adhesion $adhesion): string
+    {
+        return NettoyeurHtmlMail::enHtml($this->corps($adhesion));
+    }
+
+    public function corpsTexte(Adhesion $adhesion): string
+    {
+        return NettoyeurHtmlMail::enTexte($this->corps($adhesion));
+    }
+
     /** @return array<string, string> */
     public function variables(Adhesion $adhesion): array
     {

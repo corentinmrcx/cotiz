@@ -11,7 +11,8 @@ class CarteAdherentMail extends Mailable
 {
     public function __construct(
         public string $objet,
-        public string $corps,
+        public string $corpsHtml,
+        public string $corpsTexte,
         public string $cheminPng,
         public string $cheminPdf,
         public string $nomFichierPdf,
