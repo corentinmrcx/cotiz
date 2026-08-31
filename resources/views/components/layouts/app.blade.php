@@ -28,6 +28,9 @@
     <main class="contenu">
         {{ $slot }}
     </main>
+    <footer class="pied">
+        Propulsé par <a href="https://codepp.fr" target="_blank" rel="noopener">Codepp</a>
+    </footer>
     @livewireScripts
 </body>
 </html>
