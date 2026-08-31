@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SaisonSeeder::class,
             ReglageSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
