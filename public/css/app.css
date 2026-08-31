@@ -81,6 +81,7 @@ h3 { font-size: 1rem; margin: 0 0 0.75rem; }
 .formulaire input[type="number"],
 .formulaire input[type="password"],
 .formulaire input[type="file"],
+.formulaire input[type="date"],
 .formulaire select,
 .formulaire textarea {
     display: block;
@@ -154,3 +155,10 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .badge.orange { background: #fbf1dc; color: var(--orange); }
 
 .apercu-visuel { display: block; width: 100%; max-width: 320px; border: 1px solid var(--gris); border-radius: 4px; margin: 0.25rem 0 0.5rem; }
+
+.barre-outils { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.barre-outils > :last-child { margin-left: auto; }
+.filtre select { margin-left: 0.4rem; padding: 0.35rem 0.5rem; font: inherit; border: 1px solid var(--gris); border-radius: 6px; }
+.actions-ligne { white-space: nowrap; }
+.actions-ligne .bouton { margin-right: 0.3rem; }
+.tableau td:first-child { white-space: nowrap; }
