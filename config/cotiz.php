@@ -8,4 +8,12 @@ return [
         'password' => env('APP_AUTH_PASSWORD'),
     ],
 
+    'chrome_path' => env('CHROME_PATH', '/usr/bin/chromium'),
+
+    'carte' => [
+        'largeur' => 1050,
+        'hauteur' => 600,
+        'facteur_echelle' => 2,
+    ],
+
 ];

@@ -1,0 +1,89 @@
+/*
+ * Coordonnées des champs rendus par-dessus les visuels de la carte.
+ * Toutes les positions sont en pourcentage de la carte (1050 × 600 nominal),
+ * mesurées depuis le coin supérieur gauche. Les tailles de police sont en
+ * pourcentage de la hauteur de la carte via la variable --h (1% = 6px).
+ */
+
+/* ---------- Recto ---------- */
+
+/* Libellé de saison, sous « CARTE D'ADHÉRENT » */
+.recto .saison {
+    left: 35.0%;
+    top: 51.7%;
+    font-weight: 700;
+    font-size: calc(var(--h) * 9);
+    color: #fff;
+}
+
+/* ---------- Verso ---------- */
+
+/* Bandeau blanc supérieur : NOM Prénom */
+.verso .nom {
+    left: 3.4%;
+    top: 9.6%;
+    font-weight: 800;
+    font-size: calc(var(--h) * 10.4);
+    color: #000;
+    white-space: nowrap;
+}
+
+/* Cadres blancs des effectifs : chiffre centré dans le cadre */
+.verso .nb-adultes,
+.verso .nb-enfants,
+.verso .cotisation {
+    width: 13.4%;
+    height: 11.4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: calc(var(--h) * 8.8);
+    color: #000;
+}
+
+.verso .nb-adultes { left: 33.3%; top: 28.7%; }
+.verso .nb-enfants { left: 33.3%; top: 44%; }
+.verso .cotisation { left: 80.2%; top: 36.4%; width: 12.8%; }
+
+/* Pied de page gauche : nom, mail et adresse de l'association */
+.verso .asso-nom {
+    left: 3.1%;
+    top: 74.2%;
+    font-weight: 700;
+    font-size: calc(var(--h) * 4.9);
+    color: #fff;
+}
+
+.verso .asso-email {
+    left: 3.1%;
+    top: 81.7%;
+    font-weight: 400;
+    font-size: calc(var(--h) * 3.5);
+    color: #fff;
+}
+
+.verso .asso-adresse {
+    left: 3.1%;
+    top: 86.9%;
+    font-weight: 400;
+    font-size: calc(var(--h) * 3.5);
+    color: #fff;
+}
+
+/* Pied de page droit : les trois tarifs (libellé à gauche, montant à droite) */
+.verso .tarifs {
+    left: 51.5%;
+    top: 70.3%;
+    width: 45.2%;
+    font-weight: 400;
+    font-size: calc(var(--h) * 3.9);
+    color: #fff;
+}
+
+.verso .tarifs li {
+    display: flex;
+    justify-content: space-between;
+    height: calc(var(--h) * 7.9);
+    align-items: center;
+}
