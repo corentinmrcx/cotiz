@@ -18,6 +18,7 @@ class RenduCarte
             'coordonnees' => file_get_contents(resource_path('cartes/gabarit.css')),
             'largeur' => config('cotiz.carte.largeur'),
             'hauteur' => config('cotiz.carte.hauteur'),
+            'espacement' => config('cotiz.carte.espacement_faces'),
         ])->render();
     }
 

@@ -31,6 +31,10 @@
 
         .face:last-child { page-break-after: auto; break-after: auto; }
 
+        .face + .face { margin-top: {{ $espacement }}px; }
+
+        @media print { .face + .face { margin-top: 0; } }
+
         .face > * { position: absolute; margin: 0; line-height: 1; white-space: nowrap; }
 
         .tarifs { list-style: none; padding: 0; }

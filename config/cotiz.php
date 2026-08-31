@@ -14,6 +14,7 @@ return [
         'largeur' => 1050,
         'hauteur' => 600,
         'facteur_echelle' => 2,
+        'espacement_faces' => 40,
     ],
 
 ];

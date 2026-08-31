@@ -41,6 +41,8 @@ return [
         'data' => [
             'driver' => 'local',
             'root' => base_path('data'),
+            'visibility' => 'public',
+            'directory_visibility' => 'public',
             'throw' => true,
             'report' => false,
         ],

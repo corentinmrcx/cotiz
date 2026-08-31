@@ -20,7 +20,9 @@ class GenerateurCarte
         $html = $this->rendu->html($adhesion);
         $base = $this->cheminSansExtension($adhesion);
 
-        $this->disque()->makeDirectory(dirname($base));
+        if (! $this->disque()->exists(dirname($base))) {
+            $this->disque()->makeDirectory(dirname($base));
+        }
 
         $this->navigateur($html)
             ->paperSize($this->enMillimetres(config('cotiz.carte.largeur')), $this->enMillimetres(config('cotiz.carte.hauteur')))
@@ -29,7 +31,7 @@ class GenerateurCarte
             ->save($this->disque()->path($base.'.pdf'));
 
         $this->navigateur($html)
-            ->windowSize(config('cotiz.carte.largeur'), config('cotiz.carte.hauteur') * 2)
+            ->windowSize(config('cotiz.carte.largeur'), config('cotiz.carte.hauteur') * 2 + config('cotiz.carte.espacement_faces'))
             ->deviceScaleFactor(config('cotiz.carte.facteur_echelle'))
             ->fullPage()
             ->save($this->disque()->path($base.'.png'));
