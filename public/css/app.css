@@ -251,3 +251,5 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .menu-actions-liste button:disabled { opacity: 0.5; cursor: default; }
 .menu-actions-liste .danger { color: var(--rouge); }
 .badge.avec-info { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
+
+.encart { border: 1px solid var(--gris); border-radius: 6px; padding: 0.9rem 1rem 0.1rem; background: var(--gris-clair); }

@@ -100,6 +100,34 @@ class ReglagesTest extends TestCase
         $this->assertSame('#0b3d91', Saison::active()->couleur);
     }
 
+    public function test_une_saison_sans_adhesion_peut_etre_supprimee_et_une_autre_devient_active(): void
+    {
+        Livewire::test(Saisons::class)
+            ->set('nouvelleAnnee', 2026)
+            ->call('ouvrirNouvelleSaison');
+
+        $nouvelle = Saison::active();
+
+        Livewire::test(Saisons::class)
+            ->call('supprimer', $nouvelle->id)
+            ->assertSet('message', 'Saison supprimée.');
+
+        $this->assertNull(Saison::query()->find($nouvelle->id));
+        $this->assertSame('2025-2026', Saison::active()->libelle);
+    }
+
+    public function test_une_saison_avec_des_adhesions_ne_peut_pas_etre_supprimee(): void
+    {
+        $saison = Saison::active();
+        $saison->adhesions()->create(['numero' => '2526-001', 'nom' => 'Dupont', 'nb_adultes' => 1, 'cotisation_calculee' => 8]);
+
+        Livewire::test(Saisons::class)
+            ->call('supprimer', $saison->id)
+            ->assertSet('message', 'Impossible de supprimer une saison qui contient des adhésions.');
+
+        $this->assertNotNull(Saison::query()->find($saison->id));
+    }
+
     public function test_un_libelle_de_saison_deja_utilise_est_refuse(): void
     {
         Livewire::test(Saisons::class)

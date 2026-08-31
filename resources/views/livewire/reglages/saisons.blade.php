@@ -10,18 +10,20 @@
             <h3>Saisons existantes</h3>
             <table class="tableau">
                 <thead>
-                    <tr><th>Libellé</th><th>Tarifs</th><th></th></tr>
+                    <tr><th>Libellé</th><th>Tarifs</th><th>Adhésions</th><th></th></tr>
                 </thead>
                 <tbody>
                     @foreach ($saisons as $saison)
                         <tr>
-                            <td>{{ $saison->libelle }}</td>
-                            <td>{{ $saison->tarif_adulte }} € / {{ $saison->tarif_enfant_famille }} € / {{ $saison->tarif_enfant_seul }} €</td>
-                            <td>
-                                @if ($saison->active)
-                                    <span class="badge vert">Active</span>
-                                @else
+                            <td>{{ $saison->libelle }} @if ($saison->active) <span class="badge vert">Active</span> @endif</td>
+                            <td class="nowrap">{{ $saison->tarif_adulte }} € / {{ $saison->tarif_enfant_famille }} € / {{ $saison->tarif_enfant_seul }} €</td>
+                            <td>{{ $saison->adhesions_count }}</td>
+                            <td class="actions-ligne">
+                                @unless ($saison->active)
                                     <button type="button" class="bouton petit secondaire" wire:click="activer({{ $saison->id }})">Activer</button>
+                                @endunless
+                                @if ($saison->adhesions_count === 0)
+                                    <button type="button" class="bouton petit danger" wire:click="supprimer({{ $saison->id }})" wire:confirm="Supprimer la saison {{ $saison->libelle }} ?">Supprimer</button>
                                 @endif
                             </td>
                         </tr>
@@ -29,27 +31,26 @@
                 </tbody>
             </table>
 
-            <form wire:submit="ouvrirNouvelleSaison" class="formulaire">
-                <label>Ouvrir une nouvelle saison — année de début
-                    <select wire:model.live="nouvelleAnnee">
-                        @foreach ($anneesProposees as $annee)
-                            <option value="{{ $annee }}">{{ $annee }}</option>
-                        @endforeach
-                    </select>
-                    @error('nouvelleAnnee') <span class="champ-erreur">{{ $message }}</span> @enderror
-                </label>
-                <p class="aide">La saison <strong>{{ $libelleNouvelleSaison }}</strong> sera créée. Les tarifs, le logo et la couleur de la saison active sont repris et restent modifiables.</p>
-                <button type="submit" class="bouton secondaire">Ouvrir et activer</button>
-            </form>
+            @if (! $ajoutOuvert)
+                <button type="button" class="bouton secondaire" wire:click="$set('ajoutOuvert', true)">Ouvrir une nouvelle saison</button>
+            @else
+                <form wire:submit="ouvrirNouvelleSaison" class="formulaire encart">
+                    <label>Année de début de la nouvelle saison
+                        <input type="number" min="2000" max="2100" wire:model.live="nouvelleAnnee">
+                        @error('nouvelleAnnee') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    </label>
+                    <p class="aide">La saison <strong>{{ $libelleNouvelleSaison }}</strong> sera créée et activée. Les tarifs, le logo et la couleur de la saison active sont repris et restent modifiables.</p>
+                    <div class="actions">
+                        <button type="submit" class="bouton">Ouvrir et activer</button>
+                        <button type="button" class="bouton secondaire" wire:click="$set('ajoutOuvert', false)">Annuler</button>
+                    </div>
+                </form>
+            @endif
         </div>
 
         @if ($form->saison)
             <form wire:submit="enregistrer" class="formulaire">
                 <h3>Saison active : {{ $form->saison->libelle }}</h3>
-                <label>Libellé (affiché sur la carte)
-                    <input type="text" wire:model="form.libelle">
-                    @error('form.libelle') <span class="champ-erreur">{{ $message }}</span> @enderror
-                </label>
                 <div class="grille-3">
                     <label>Tarif adulte (€)
                         <input type="number" step="0.01" min="0" wire:model="form.tarif_adulte">

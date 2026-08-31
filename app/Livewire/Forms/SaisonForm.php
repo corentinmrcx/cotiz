@@ -10,8 +10,6 @@ class SaisonForm extends Form
 {
     public ?Saison $saison = null;
 
-    public string $libelle = '';
-
     public string $tarif_adulte = '';
 
     public string $tarif_enfant_famille = '';
@@ -25,7 +23,6 @@ class SaisonForm extends Form
     public function rules(): array
     {
         return [
-            'libelle' => ['required', 'string', 'regex:/^\d{4}-\d{4}$/'],
             'tarif_adulte' => ['required', 'numeric', 'min:0'],
             'tarif_enfant_famille' => ['required', 'numeric', 'min:0'],
             'tarif_enfant_seul' => ['required', 'numeric', 'min:0'],
@@ -37,7 +34,6 @@ class SaisonForm extends Form
     public function validationAttributes(): array
     {
         return [
-            'libelle' => 'libellé',
             'tarif_adulte' => 'tarif adulte',
             'tarif_enfant_famille' => 'tarif enfant en famille',
             'tarif_enfant_seul' => 'tarif enfant seul',
@@ -49,7 +45,6 @@ class SaisonForm extends Form
     public function charger(Saison $saison): void
     {
         $this->saison = $saison;
-        $this->libelle = $saison->libelle;
         $this->tarif_adulte = (string) $saison->tarif_adulte;
         $this->tarif_enfant_famille = (string) $saison->tarif_enfant_famille;
         $this->tarif_enfant_seul = (string) $saison->tarif_enfant_seul;
@@ -62,7 +57,6 @@ class SaisonForm extends Form
         $this->validate();
 
         $this->saison->update([
-            'libelle' => $this->libelle,
             'tarif_adulte' => $this->tarif_adulte,
             'tarif_enfant_famille' => $this->tarif_enfant_famille,
             'tarif_enfant_seul' => $this->tarif_enfant_seul,
