@@ -8,6 +8,7 @@
     <div class="grille-2">
         <div>
             <h3>Saisons existantes</h3>
+            <div class="defilement-x">
             <table class="tableau">
                 <thead>
                     <tr><th>Libellé</th><th>Tarifs</th><th>Adhésions</th><th></th></tr>
@@ -30,6 +31,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
 
             @if (! $ajoutOuvert)
                 <button type="button" class="bouton secondaire" wire:click="$set('ajoutOuvert', true)">Ouvrir une nouvelle saison</button>

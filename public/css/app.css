@@ -128,6 +128,7 @@ fieldset {
 legend { font-weight: 700; padding: 0 0.4rem; }
 
 .grille-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.25rem; }
+.grille-2 > * { min-width: 0; }
 .grille-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1.25rem; }
 
 @media (max-width: 760px) {
@@ -253,3 +254,5 @@ legend { font-weight: 700; padding: 0 0.4rem; }
 .badge.avec-info { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
 
 .encart { border: 1px solid var(--gris); border-radius: 6px; padding: 0.9rem 1rem 0.1rem; background: var(--gris-clair); }
+
+.defilement-x { overflow-x: auto; }
