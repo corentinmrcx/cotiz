@@ -2,7 +2,6 @@ FROM php:8.3-cli-trixie AS base
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PUPPETEER_SKIP_DOWNLOAD=true \
-    NODE_PATH=/opt/puppeteer/node_modules \
     CHROME_PATH=/usr/bin/chromium \
     PHP_CLI_SERVER_WORKERS=4
 
@@ -25,9 +24,7 @@ RUN apt-get update \
     && docker-php-ext-install -j"$(nproc)" pdo_sqlite zip gd intl bcmath \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /opt/puppeteer \
-    && cd /opt/puppeteer \
-    && npm install --omit=dev puppeteer@24 \
+RUN npm install -g puppeteer@24 \
     && npm cache clean --force
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

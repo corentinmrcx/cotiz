@@ -49,3 +49,108 @@ body {
     margin: 2rem auto;
     padding: 0 1.5rem;
 }
+
+h1 { font-size: 1.6rem; margin: 0 0 1.25rem; }
+h2 { font-size: 1.25rem; margin: 0 0 1rem; color: var(--vert-fonce); }
+h3 { font-size: 1rem; margin: 0 0 0.75rem; }
+
+.carte {
+    background: #fff;
+    border: 1px solid var(--gris);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.formulaire label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+}
+
+.formulaire label.case {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.formulaire input[type="text"],
+.formulaire input[type="email"],
+.formulaire input[type="number"],
+.formulaire input[type="password"],
+.formulaire input[type="file"],
+.formulaire select,
+.formulaire textarea {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.6rem;
+    font: inherit;
+    font-weight: 400;
+    border: 1px solid var(--gris);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.formulaire textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; }
+
+fieldset {
+    border: 1px solid var(--gris);
+    border-radius: 6px;
+    padding: 0.75rem 1rem 0.25rem;
+    margin: 0 0 1.25rem;
+}
+
+legend { font-weight: 700; padding: 0 0.4rem; }
+
+.grille-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.25rem; }
+.grille-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1.25rem; }
+
+@media (max-width: 760px) {
+    .grille-2, .grille-3 { grid-template-columns: 1fr; }
+}
+
+.actions { display: flex; align-items: center; gap: 0.75rem; margin: 0.5rem 0 0.75rem; }
+
+.bouton {
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--vert);
+    border: 1px solid var(--vert);
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.bouton:hover { background: var(--vert-fonce); }
+.bouton:disabled { opacity: 0.6; cursor: wait; }
+.bouton.secondaire { color: var(--vert); background: #fff; }
+.bouton.secondaire:hover { background: var(--gris-clair); }
+.bouton.petit { padding: 0.3rem 0.7rem; font-size: 0.85rem; }
+.bouton.danger { color: var(--rouge); border-color: var(--rouge); background: #fff; }
+
+.message { padding: 0.6rem 0.9rem; border-radius: 6px; margin: 0 0 1rem; }
+.message.succes { background: #e6f2ea; color: var(--vert-fonce); }
+.message.erreur { background: #f9e5e3; color: var(--rouge); }
+.message.avertissement { background: #fbf1dc; color: var(--orange); }
+
+.champ-erreur { display: block; color: var(--rouge); font-size: 0.8rem; font-weight: 500; margin-top: 0.2rem; }
+.aide { font-size: 0.85rem; color: #55605a; margin: -0.4rem 0 1rem; }
+.aide code { background: var(--gris-clair); padding: 0.1rem 0.3rem; border-radius: 4px; }
+
+.tableau { width: 100%; border-collapse: collapse; margin-bottom: 1.25rem; font-size: 0.92rem; }
+.tableau th, .tableau td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--gris); vertical-align: middle; }
+.tableau th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; color: #55605a; }
+
+.badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+.badge.vert { background: #e6f2ea; color: var(--vert-fonce); }
+.badge.gris { background: var(--gris-clair); color: #55605a; }
+.badge.rouge { background: #f9e5e3; color: var(--rouge); }
+.badge.orange { background: #fbf1dc; color: var(--orange); }
+
+.apercu-visuel { display: block; width: 100%; max-width: 320px; border: 1px solid var(--gris); border-radius: 4px; margin: 0.25rem 0 0.5rem; }

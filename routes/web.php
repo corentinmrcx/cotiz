@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\VisuelController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('accueil'))->name('accueil');
+Route::get('/', fn () => redirect()->route('reglages'))->name('accueil');
+Route::view('/reglages', 'reglages')->name('reglages');
+Route::get('/visuels/{saison}/{face}', [VisuelController::class, 'afficher'])
+    ->whereIn('face', ['recto', 'verso'])
+    ->name('visuels.afficher');

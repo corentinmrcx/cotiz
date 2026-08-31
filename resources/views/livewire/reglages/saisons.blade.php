@@ -1,0 +1,86 @@
+<section class="carte">
+    <h2>Saison</h2>
+
+    @if ($message)
+        <p class="message succes">{{ $message }}</p>
+    @endif
+
+    <div class="grille-2">
+        <div>
+            <h3>Saisons existantes</h3>
+            <table class="tableau">
+                <thead>
+                    <tr><th>Libellé</th><th>Tarifs</th><th></th></tr>
+                </thead>
+                <tbody>
+                    @foreach ($saisons as $saison)
+                        <tr>
+                            <td>{{ $saison->libelle }}</td>
+                            <td>{{ $saison->tarif_adulte }} € / {{ $saison->tarif_enfant_famille }} € / {{ $saison->tarif_enfant_seul }} €</td>
+                            <td>
+                                @if ($saison->active)
+                                    <span class="badge vert">Active</span>
+                                @else
+                                    <button type="button" class="bouton petit secondaire" wire:click="activer({{ $saison->id }})">Activer</button>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <form wire:submit="ouvrirNouvelleSaison" class="formulaire">
+                <label>Ouvrir une nouvelle saison
+                    <input type="text" placeholder="2026-2027" wire:model="nouveauLibelle">
+                    @error('nouveauLibelle') <span class="champ-erreur">{{ $message }}</span> @enderror
+                </label>
+                <p class="aide">Les tarifs et les visuels de la saison active sont repris et restent modifiables.</p>
+                <button type="submit" class="bouton secondaire">Ouvrir et activer</button>
+            </form>
+        </div>
+
+        @if ($form->saison)
+            <form wire:submit="enregistrer" class="formulaire">
+                <h3>Saison active : {{ $form->saison->libelle }}</h3>
+                <label>Libellé (affiché sur la carte)
+                    <input type="text" wire:model="form.libelle">
+                    @error('form.libelle') <span class="champ-erreur">{{ $message }}</span> @enderror
+                </label>
+                <div class="grille-3">
+                    <label>Tarif adulte (€)
+                        <input type="number" step="0.01" min="0" wire:model="form.tarif_adulte">
+                        @error('form.tarif_adulte') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    </label>
+                    <label>Enfant en famille (€)
+                        <input type="number" step="0.01" min="0" wire:model="form.tarif_enfant_famille">
+                        @error('form.tarif_enfant_famille') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    </label>
+                    <label>Enfant seul (€)
+                        <input type="number" step="0.01" min="0" wire:model="form.tarif_enfant_seul">
+                        @error('form.tarif_enfant_seul') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    </label>
+                </div>
+                <div class="grille-2">
+                    <label>Visuel recto
+                        @if ($form->saison->visuel_recto)
+                            <img class="apercu-visuel" src="{{ route('visuels.afficher', [$form->saison, 'recto']) }}?v={{ $form->saison->updated_at->timestamp }}" alt="Recto actuel">
+                        @endif
+                        <input type="file" accept="image/*" wire:model="form.visuel_recto">
+                        @error('form.visuel_recto') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    </label>
+                    <label>Visuel verso
+                        @if ($form->saison->visuel_verso)
+                            <img class="apercu-visuel" src="{{ route('visuels.afficher', [$form->saison, 'verso']) }}?v={{ $form->saison->updated_at->timestamp }}" alt="Verso actuel">
+                        @endif
+                        <input type="file" accept="image/*" wire:model="form.visuel_verso">
+                        @error('form.visuel_verso') <span class="champ-erreur">{{ $message }}</span> @enderror
+                    </label>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="bouton" wire:loading.attr="disabled">Enregistrer la saison</button>
+                    <span wire:loading wire:target="form.visuel_recto,form.visuel_verso">Téléversement…</span>
+                </div>
+            </form>
+        @endif
+    </div>
+</section>

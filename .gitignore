@@ -24,3 +24,4 @@ Homestead.yaml
 Thumbs.db
 /data
 /docker-compose.override.yml
+/storage/captures
