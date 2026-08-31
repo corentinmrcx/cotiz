@@ -76,7 +76,7 @@ class ReglagesTest extends TestCase
     public function test_ouvrir_une_nouvelle_saison_reprend_les_tarifs_et_l_active(): void
     {
         Livewire::test(Saisons::class)
-            ->set('nouveauLibelle', '2026-2027')
+            ->set('nouvelleAnnee', 2026)
             ->call('ouvrirNouvelleSaison')
             ->assertHasNoErrors();
 
@@ -92,8 +92,8 @@ class ReglagesTest extends TestCase
     public function test_un_libelle_de_saison_deja_utilise_est_refuse(): void
     {
         Livewire::test(Saisons::class)
-            ->set('nouveauLibelle', '2025-2026')
+            ->set('nouvelleAnnee', 2025)
             ->call('ouvrirNouvelleSaison')
-            ->assertHasErrors(['nouveauLibelle']);
+            ->assertHasErrors(['nouvelleAnnee']);
     }
 }

@@ -43,6 +43,16 @@ class Saison extends Model
         $this->update(['active' => true]);
     }
 
+    public static function libellePourAnnee(int $anneeDebut): string
+    {
+        return $anneeDebut.'-'.($anneeDebut + 1);
+    }
+
+    public function anneeDebut(): int
+    {
+        return (int) substr($this->libelle, 0, 4);
+    }
+
     public function prefixeNumero(): string
     {
         preg_match_all('/\d{4}/', $this->libelle, $annees);

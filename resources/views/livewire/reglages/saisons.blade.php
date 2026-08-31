@@ -30,11 +30,15 @@
             </table>
 
             <form wire:submit="ouvrirNouvelleSaison" class="formulaire">
-                <label>Ouvrir une nouvelle saison
-                    <input type="text" placeholder="2026-2027" wire:model="nouveauLibelle">
-                    @error('nouveauLibelle') <span class="champ-erreur">{{ $message }}</span> @enderror
+                <label>Ouvrir une nouvelle saison — année de début
+                    <select wire:model.live="nouvelleAnnee">
+                        @foreach ($anneesProposees as $annee)
+                            <option value="{{ $annee }}">{{ $annee }}</option>
+                        @endforeach
+                    </select>
+                    @error('nouvelleAnnee') <span class="champ-erreur">{{ $message }}</span> @enderror
                 </label>
-                <p class="aide">Les tarifs et les visuels de la saison active sont repris et restent modifiables.</p>
+                <p class="aide">La saison <strong>{{ $libelleNouvelleSaison }}</strong> sera créée. Les tarifs et les visuels de la saison active sont repris et restent modifiables.</p>
                 <button type="submit" class="bouton secondaire">Ouvrir et activer</button>
             </form>
         </div>
