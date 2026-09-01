@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
          colors="true"
 >
     <testsuites>
@@ -26,7 +26,10 @@
         <server name="DB_CONNECTION" value="sqlite" force="true"/>
         <server name="DB_DATABASE" value=":memory:" force="true"/>
         <server name="DB_URL" value="" force="true"/>
+        <server name="MAIL_FROM_ADDRESS" value="contact@exemple.org" force="true"/>
         <server name="MAIL_MAILER" value="array" force="true"/>
+        <server name="MAIL_PASSWORD" value="" force="true"/>
+        <server name="MAIL_USERNAME" value="contact@exemple.org" force="true"/>
         <server name="QUEUE_CONNECTION" value="sync" force="true"/>
         <server name="SESSION_DRIVER" value="array" force="true"/>
         <server name="PULSE_ENABLED" value="false" force="true"/>
