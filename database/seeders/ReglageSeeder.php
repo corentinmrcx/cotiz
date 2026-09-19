@@ -23,12 +23,12 @@ class ReglageSeeder extends Seeder
     private function valeursParDefaut(): array
     {
         return [
-            CleReglage::ExpediteurNom->value => config('mail.from.name'),
-            CleReglage::ExpediteurEmail->value => config('mail.from.address'),
-            CleReglage::SmtpHost->value => config('mail.mailers.smtp.host'),
-            CleReglage::SmtpPort->value => (string) config('mail.mailers.smtp.port'),
-            CleReglage::SmtpUsername->value => config('mail.mailers.smtp.username'),
-            CleReglage::SmtpPassword->value => config('mail.mailers.smtp.password'),
+            CleReglage::ExpediteurNom->value => null,
+            CleReglage::ExpediteurEmail->value => null,
+            CleReglage::SmtpHost->value => null,
+            CleReglage::SmtpPort->value => '587',
+            CleReglage::SmtpUsername->value => null,
+            CleReglage::SmtpPassword->value => null,
             CleReglage::SmtpEncryption->value => 'tls',
             CleReglage::CopieCacheeActive->value => '1',
             CleReglage::MailObjet->value => 'Votre carte d\'adhérent {{saison}} — {{asso_nom}}',

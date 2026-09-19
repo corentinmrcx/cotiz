@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\CleReglage;
+use App\Exceptions\SmtpNonConfigure;
 use App\Models\Reglage;
 use Illuminate\Support\Facades\Mail;
 
@@ -10,6 +11,10 @@ class ConfigurateurTransportSmtp
 {
     public function appliquerReglages(): void
     {
+        if (blank(Reglage::valeur(CleReglage::SmtpHost)) || blank(Reglage::valeur(CleReglage::ExpediteurEmail))) {
+            throw new SmtpNonConfigure('SMTP non configuré : renseigner le serveur et l\'adresse de l\'expéditeur dans les Réglages.');
+        }
+
         config([
             'mail.default' => 'smtp',
             'mail.mailers.smtp.scheme' => $this->schemaPour(Reglage::valeur(CleReglage::SmtpEncryption)),

@@ -73,7 +73,7 @@ Prérequis : Docker et Docker Compose. Rien d'autre.
 
 ```bash
 git clone git@github.com:corentinmrcx/cotiz.git && cd cotiz
-cp .env.example .env      # renseigner le mot de passe d'application SMTP
+cp .env.example .env
 docker compose up -d
 ```
 

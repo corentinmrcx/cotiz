@@ -29,6 +29,9 @@ class EnvoiCarteTest extends TestCase
 
         Storage::fake('data');
         $this->seed([SaisonSeeder::class, ReglageSeeder::class]);
+        Reglage::definir(CleReglage::ExpediteurNom, 'Foyer de Soudron');
+        Reglage::definir(CleReglage::ExpediteurEmail, 'contact@exemple.org');
+        Reglage::definir(CleReglage::SmtpHost, 'smtp.exemple.org');
         Mail::fake();
     }
 
@@ -87,6 +90,19 @@ class EnvoiCarteTest extends TestCase
         $adhesion->refresh();
         $this->assertSame(StatutAdhesion::Echec, $adhesion->statut);
         $this->assertSame('SMTP injoignable', $adhesion->erreur_envoi);
+    }
+
+    public function test_un_envoi_sans_smtp_configure_est_enregistre_en_echec_avec_un_message_clair(): void
+    {
+        Reglage::definir(CleReglage::SmtpHost, null);
+        $adhesion = $this->adhesion();
+
+        app(EnvoyeurCarte::class)->envoyer($adhesion);
+
+        $adhesion->refresh();
+        Mail::assertNothingSent();
+        $this->assertSame(StatutAdhesion::Echec, $adhesion->statut);
+        $this->assertStringStartsWith('SMTP non configuré', $adhesion->erreur_envoi);
     }
 
     public function test_la_generation_en_test_produit_les_cartes_sans_envoyer(): void

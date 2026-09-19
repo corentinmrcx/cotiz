@@ -24,6 +24,9 @@ class ReglagesTest extends TestCase
 
         Storage::fake('data');
         $this->seed([SaisonSeeder::class, ReglageSeeder::class]);
+        Reglage::definir(CleReglage::ExpediteurNom, 'Foyer de Soudron');
+        Reglage::definir(CleReglage::ExpediteurEmail, 'contact@exemple.org');
+        Reglage::definir(CleReglage::SmtpHost, 'smtp.exemple.org');
     }
 
     public function test_la_page_reglages_affiche_la_saison_active(): void
